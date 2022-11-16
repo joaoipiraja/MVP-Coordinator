@@ -101,7 +101,7 @@ extension SecondCoordinator : SecondPresenterNavigationOutput {
 }
 
 ```
-## Configure the pages
+## Configure the presents
 
 ```swift
 //First Page
