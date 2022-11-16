@@ -2,7 +2,7 @@
 Template MVP+Coordinator - UiKit
 
 
-
+### Create a protocol 
 ```swift
 public protocol Coordinator : class {
 
@@ -16,6 +16,7 @@ public protocol Coordinator : class {
 
 ```
 
+## Create the coordinator 
 
 ```swift
 
@@ -30,8 +31,9 @@ class FirstCoordinator: Coordinator {
     }
     
     func start() {
-        let firstViewController : FirstViewController = FirstViewController()
-        firstViewController.delegate = self
+        let firstPresenter = FirstPresenter()
+        firstPresenter.navigation = self
+        let firstViewController = FirstViewController(presenter: firstPresenter)
         self.navigationController.viewControllers = [firstViewController]
     }
 }
@@ -55,6 +57,8 @@ extension FirstCoordinator: BackToFirstViewControllerDelegate {
         childCoordinators.removeLast()
     }
 }
+
+
 
 ```
 
@@ -80,21 +84,16 @@ class SecondCoordinator: Coordinator {
     }
     
     func start() {
-        let secondViewController : SecondViewController = SecondViewController()
-        secondViewController.delegate = self
+    
+        let secondPresenter : SecondPresenter = secondPresenter()
+        secondPresenter.navigation = self
+        let secondViewController = SecondViewController(presenter: secondPresenter)
         self.navigationController.pushViewController(secondViewController, animated: true)
     }
 }
 
-extension SecondCoordinator : SecondViewControllerDelegate {
-    
-    // Navigate to third page
-    func navigateToThirdPage() {
-        let thirdViewController : ThirdViewController = ThirdViewController()
-        thirdViewController.delegate = self
-        self.navigationController.pushViewController(thirdViewController, animated: true)
-    }
-    
+extension SecondCoordinator : SecondPresenterNavigationOutput {
+   
     // Navigate to first page
     func navigateToFirstPage() {
         self.delegate?.navigateBackToFirstPage(newOrderCoordinator: self)
@@ -102,25 +101,23 @@ extension SecondCoordinator : SecondViewControllerDelegate {
 }
 
 ```
-
+## Configure the pages
 
 ```swift
 //First Page
 
-public protocol FirstViewControllerDelegate: class {
+
+protocol FirstPresenterNavigationOutput: anyObject {
     func navigateToNextPage()
 }
 
-class FirstViewController: UIViewController {
+class FirstPresenter: UIViewController {
 
-    public weak var delegate: FirstViewControllerDelegate?
+    public weak var view: FirstPresenterOutput? 
+    public weak var navigation: FirstPresenterNavigationOutput?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "FirstViewController"
-    }
-    
-    self.delegate?.navigateToNextPage()
+   
+    self.navigation?.navigateToNextPage()
     
 }
 
@@ -129,24 +126,19 @@ class FirstViewController: UIViewController {
 ```swift
 //Second Page
 
-public protocol SecondViewControllerDelegate: class {
+protocol SecondPresenterNavigationOutput: anyObject {
     func navigateToFirstPage()
     func navigateToThirdPage()
 }
 
-class SecondViewController: UIViewController {
+class SecondPresenter: UIViewController {
     
-    public weak var delegate: SecondViewControllerDelegate?
-
+    public weak var view: (SecondPresenterOutput)?
+    public weak var navigation: SecondPresenterNavigationOutput?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
     
-        title = "SecondViewController"
-    }
-    
-    self.delegate?.navigateToFirstPage()
-    self.delegate?.navigateToThirdPage()
+    self.navigation?.navigateToFirstPage()
+    self.navigation?.navigateToThirdPage()
     
 }
 
