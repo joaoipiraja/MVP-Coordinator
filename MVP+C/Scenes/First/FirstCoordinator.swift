@@ -28,7 +28,9 @@ class FirstCoordinator: Coordinator {
         let viewController = FirstViewController(presenter: presenter)
         presenter.view = viewController
         presenter.navigation = self
-        self.navigationController.viewControllers = [viewController]
+        
+        self.navigationController.pushViewController(viewController, animated: true)
+        
         presenter.view?.loadInitialState()
     }
     
@@ -37,8 +39,10 @@ class FirstCoordinator: Coordinator {
 extension FirstCoordinator: FirstPresenterNavigationOutput{
     
     func navigateToNextPage() {
+        
         let secondCoordinator = SecondCoordinator(navigationController: navigationController)
         secondCoordinator.childCoordinators.append(self)
+        //secondCoordinator.childCoordinators.append(self)
         //secondCoordinator.childCoordinators.append(self)
         secondCoordinator.start()
     }

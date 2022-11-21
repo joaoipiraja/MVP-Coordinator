@@ -32,7 +32,7 @@ final class FirstPresenterTests: XCTestCase {
         sut.view = view
         
         // when
-        sut.loadInitialState()
+        sut.view?.loadInitialState()
         
         // then
         XCTAssert(view.calledLoadInitialState)

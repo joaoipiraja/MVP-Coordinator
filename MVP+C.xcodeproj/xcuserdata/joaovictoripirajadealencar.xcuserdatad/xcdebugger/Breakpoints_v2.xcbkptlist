@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9FFE3C9A-7C16-46A4-A844-B22C3ED0629C"
-            shouldBeEnabled = "Yes"
+            uuid = "13532527-AAF2-49F4-9701-2310B630499A"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MVP+C/Scenes/Second/SecondPresenter.swift"
+            filePath = "MVP+C/Scenes/Second/SecondCoordinator.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "tap()"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "navigateBackToFirstPage()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

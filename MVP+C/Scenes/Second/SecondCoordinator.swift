@@ -25,8 +25,9 @@ class SecondCoordinator: Coordinator {
         let viewController = SecondViewController(presenter: presenter)
         presenter.view = viewController
         presenter.navigation = self
-//        self.navigationController.viewControllers = [viewController]
-        self.navigationController.pushViewController(viewController, animated: true)
+        self.navigationController.viewControllers = [viewController]
+        
+//        self.navigationController.pushViewController(viewController, animated: true)
         presenter.view?.loadInitialState()
     }
     
@@ -34,7 +35,8 @@ class SecondCoordinator: Coordinator {
 
 extension SecondCoordinator: SecondPresenterNavigationOutput{
     func navigateBackToFirstPage() {
-        navigationController.popViewController(animated: true)
+        childCoordinators.first?.start()
+        //navigationController.popViewController(animated: true)
 //        childCoordinators.last?.start()
             //.start()
     }
